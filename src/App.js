@@ -43,7 +43,6 @@ class App extends Component {
 
   calculateFaceLocation = (data) => {
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-    console.log('La constante clarifaiFace: ', clarifaiFace);
     const image = document.getElementById('inputimage');
     const width = Number(image.width);
     const height = Number(image.height);
@@ -65,14 +64,14 @@ class App extends Component {
 
   onPictureSubmit = () => {
     this.setState({ imgUrl: this.state.input })
-    fetch('https://face-recognition-backend-7tak.onrender.com/imageurl', {
+    fetch('http://localhost:3001/imageurl', {
               method: 'post',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({input: this.state.input})
       })
       .then(response => response.json())
       .then(result => {
-        fetch('https://face-recognition-backend-7tak.onrender.com/image', {
+        fetch('http://localhost:3001/image', {
               method: 'put',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -83,7 +82,7 @@ class App extends Component {
           .then(userInfo => {
             this.setState(Object.assign(this.state.user, {entries:userInfo.entries}))
           })
-          .catch(console.log);
+          .catch(console.log('Error actualizando cuenta de imágenes de usuario'));
           
         this.displayFaceBox(this.calculateFaceLocation(result));
       })
