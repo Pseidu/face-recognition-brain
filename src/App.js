@@ -64,14 +64,14 @@ class App extends Component {
 
   onPictureSubmit = () => {
     this.setState({ imgUrl: this.state.input })
-    fetch('http://localhost:3001/imageurl', {
+    fetch('https://reconocimientofacial-servidornode.onrender.com/imageurl', {
               method: 'post',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({input: this.state.input})
       })
       .then(response => response.json())
       .then(result => {
-        fetch('http://localhost:3001/image', {
+        fetch('https://reconocimientofacial-servidornode.onrender.com/image', {
               method: 'put',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
